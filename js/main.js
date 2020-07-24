@@ -44,9 +44,21 @@ var offerTypeTranslation = {
     'palace': 'Дворец'
 };
 
+var OFFER_PRICE = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+};
+
 var
     rooms = ['комната', 'комнаты', 'комнат'],
     guests = ['гостя', 'гостей', 'гостей'];
+
+var Keycode = {
+    ENTER: 13,
+    ESC: 27
+};
 
 var cardFilter = document.querySelector('.map__filters-container');
 
@@ -54,9 +66,29 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var cardTemplate = document.querySelector('#card');
 var mapMain = document.querySelector('.map');
-var faded = mapMain.classList.remove('map--faded');
 var mapPins = document.querySelector('.map__pins');
 var pins = [];
+
+var adForm = document.querySelector('.ad-form');
+var adFormFieldsets = adForm.querySelectorAll('fieldset');
+var adFormRoomsNumber = adForm.querySelector('#room_number');
+var adFormGuestsNumber = adForm.querySelector('#capacity');
+var guestsOptions = adFormGuestsNumber.querySelectorAll('option');
+var adFormTitle = adForm.querySelector('#title');
+var adFormTimeIn = adForm.querySelector('#timein');
+var adFormTimeOut = adForm.querySelector('#timeout');
+var adFormPrice = adForm.querySelector('#price');
+var adFormType = adForm.querySelector('#type');
+var resetButton = adForm.querySelector('.ad-form__reset');
+var mapFilters = document.querySelector('.map__filters');
+var mapFiltersSelect = mapFilters.querySelectorAll('select');
+var mapFiltersFeatures = mapFilters.querySelectorAll('input');
+
+var isFirstLoad = true;
+var isActivate = false;
+
+var addressInput = adForm.querySelector('#address');
+adForm.querySelector('#address').setAttribute('readonly', 'readonly');
 
 /**
  * получаю случайное число
@@ -105,8 +137,10 @@ function getRandomElement(arr) {
  * @return {string}
  */
 function declension(num, expressions) {
-    var result;
-    var count = num % 100;
+    var
+        result,
+        count = num % 100;
+
     if (count >= 5 && count <= 20) {
         result = expressions['2'];
     } else {
@@ -119,6 +153,7 @@ function declension(num, expressions) {
             result = expressions['2'];
         }
     }
+
     return result;
 }
 
@@ -169,7 +204,6 @@ function createOffer(offer) {
     image.src = offer.author.avatar;
     image.alt = offer.offer.title;
 
-
     renderCard(offer);
     return offerPin;
 }
@@ -195,15 +229,16 @@ function createPins() {
  * @return {node}
  */
 function createFeatures(features) {
-    var featuresFragment = document.createDocumentFragment();
-    var featuresElement;
+    var
+        featuresFragment = document.createDocumentFragment(),
+        featuresElement;
 
-    for (var q = 0; q < features.length; q++) {
+    features.forEach(element => {
         featuresElement = document.createElement('li');
-        featuresElement.className = 'popup__feature popup__feature--' + features[q];
+        featuresElement.className = 'popup__feature popup__feature--' + element;
 
         featuresFragment.appendChild(featuresElement);
-    }
+    });
 
     return featuresFragment;
 }
@@ -214,23 +249,24 @@ function createFeatures(features) {
  * @return {node}
  */
 function createPhotos(photos) {
-    var photosFragment = document.createDocumentFragment();
-    var photosTemplate;
-    var photosElement;
-    var photoImg;
+    var
+        photosFragment = document.createDocumentFragment(),
+        photosTemplate,
+        photosElement,
+        photoImg;
 
-    for (var w = 0; w < photos.length; w++) {
+    photos.forEach(el => {
         photosTemplate = cardTemplate.content.querySelector('.popup__photos');
         photosElement = photosTemplate.cloneNode(true);
         photoImg = photosElement.querySelector('img');
 
-        photoImg.src = photos[w];
+        photoImg.src = el;
         photoImg.width = 45;
         photoImg.height = 40;
         photoImg.alt = 'offer image';
 
         photosFragment.appendChild(photosElement);
-    }
+    });
 
     return photosFragment;
 }
@@ -259,4 +295,126 @@ function renderCard(card) {
     return cardElement;
 }
 
-mapPins.appendChild(createPins());
+/**
+ * устанавливаю элементам массива атрибут disabled
+ * @param {node} elem - элемент массива
+ */
+function setDisableAttribute(elem) {
+    elem.setAttribute('disabled', 'disabled');
+}
+
+function removeDisableAttribute(elem) {
+    elem.removeAttribute('disabled');
+}
+
+adFormFieldsets.forEach(setDisableAttribute);
+mapFiltersSelect.forEach(setDisableAttribute);
+mapFiltersFeatures.forEach(setDisableAttribute);
+
+function activatePage() {
+    mapMain.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    adFormFieldsets.forEach(removeDisableAttribute);
+    mapFiltersSelect.forEach(removeDisableAttribute);
+    mapFiltersFeatures.forEach(removeDisableAttribute);
+}
+
+function enablePageByMouse() {
+    if (isFirstLoad ? !isActivate : !isActivate) {
+        if (isFirstLoad) {
+            isFirstLoad = false;
+            mapPins.appendChild(createPins());
+        }
+        isActivate = true;
+        activatePage();
+    }
+
+    writeAddress();
+}
+
+function enablePageByKey(evt) {
+    if (isFirstLoad ? !isActivate : !isActivate) {
+        if (isFirstLoad) {
+            isFirstLoad = false;
+            mapPins.appendChild(createPins());
+        }
+
+        if (evt.keyCode === Keycode.ENTER) {
+            isActivate = true;
+            activatePage();
+        }
+    }
+
+    writeAddress();
+}
+
+function writeInactiveAdress() {
+    addressInput.value = Math.round(mapPinMain.offsetLeft + mapPinMain.offsetWidth / 2) + ', ' + Math.round(mapPinMain.offsetTop + mapPinMain.offsetHeight / 2);
+}
+
+function writeAddress() {
+    addressInput.value = Math.round(mapPinMain.offsetLeft + pinParams.MAIN_SIZE_WIDTH / 2) + ', ' + Math.round(mapPinMain.offsetTop + pinParams.MAIN_SIZE_HEIGHT);
+}
+
+adFormTitle.addEventListener('invalid', function () {
+    if (adFormTitle.validity.tooShort) {
+        adFormTitle.setCustomValidity('Минимальная длина — 30 символов.');
+    } else if (adFormTitle.validity.tooLong) {
+        adFormTitle.setCustomValidity('Максимальная длина — 100 символов.');
+    } else if (adFormTitle.validity.valueMissing) {
+        adFormTitle.setCustomValidity('Обязательное текстовое поле.');
+    } else {
+        adFormTitle.setCustomValidity('');
+    }
+});
+
+adFormPrice.placeholder = OFFER_PRICE.flat;
+
+function setTypeOrPrice() {
+    var typeValue = adFormType.value;
+    var priceValue = adFormPrice.value;
+
+    switch (typeValue) {
+        case 'bungalo':
+            adFormPrice.placeholder = OFFER_PRICE.bungalo;
+            if (OFFER_PRICE.bungalo > priceValue) {
+                adFormPrice.setCustomValidity('Минимальная цена за ночь 0');
+            } else {
+                adFormPrice.setCustomValidity('');
+            }
+            break;
+        case 'flat':
+            adFormPrice.placeholder = OFFER_PRICE.flat;
+            if (OFFER_PRICE.flat > priceValue) {
+                adFormPrice.setCustomValidity('Минимальная цена за ночь 1 000');
+            } else {
+                adFormPrice.setCustomValidity('');
+            }
+            break;
+        case 'house':
+            adFormPrice.placeholder = OFFER_PRICE.house;
+            if (OFFER_PRICE.house > priceValue) {
+                adFormPrice.setCustomValidity('Минимальная цена 5 000');
+            } else {
+                adFormPrice.setCustomValidity('');
+            }
+            break;
+        case 'palace':
+            adFormPrice.placeholder = OFFER_PRICE.palace;
+            if (OFFER_PRICE.palace > priceValue) {
+                adFormPrice.setCustomValidity('Минимальная цена 10 000');
+            } else {
+                adFormPrice.setCustomValidity('');
+            }
+            break;
+    }
+}
+
+adFormPrice.setAttribute('max', '1000000');
+
+adFormType.addEventListener('change', setTypeOrPrice);
+adFormPrice.addEventListener('change', setTypeOrPrice);
+
+mapPinMain.addEventListener('mousedown', enablePageByMouse);
+mapPinMain.addEventListener('keydown', enablePageByKey);
+writeInactiveAdress();
