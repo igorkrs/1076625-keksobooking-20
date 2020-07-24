@@ -41,7 +41,6 @@ var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map_
 var mapMain = document.querySelector('.map');
 var mapPins = document.querySelector('.map__pins');
 var pins = [];
-mapMain.classList.remove('map--faded');
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -133,3 +132,4 @@ function createPins() {
 }
 
 mapPins.appendChild(createPins());
+mapMain.classList.remove('map--faded');
