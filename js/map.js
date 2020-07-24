@@ -7,7 +7,19 @@
         mapPins = document.querySelector('.map__pins'),
 
         isFirstLoad = true,
-        isActivate = false;
+        isActivate = false,
+
+        MAX_PINS = 5;
+
+    function onLoadSuccess(data) {
+        window.allPins = data;
+        var allPinsSliced = window.allPins.slice(0, MAX_PINS);
+        mapPins.appendChild(window.pin.createPins(allPinsSliced));
+    }
+
+    var onLoadError = function (errorText) {
+        window.error.getErrorMessage(errorText);
+    };
 
     function activatePage() {
         mapMain.classList.remove('map--faded');
@@ -20,34 +32,38 @@
     mapFiltersSelect.forEach(window.form.setDisableAttribute);
     window.form.mapFiltersFeatures.forEach(window.form.setDisableAttribute);
 
-    function enablePageByMouse() {
-        if (isFirstLoad ? !isActivate : !isActivate) {
+    function changeStateToActive() {
+        // проверка загрузки страницы, если первая, в глобальной переменной еще нет window.map.isActivate
+        // поэтому идет подвязка на локальную переменную isActivate
+        if (isFirstLoad ? !isActivate : !window.map.isActivate) {
             if (isFirstLoad) {
                 isFirstLoad = false;
-                mapPins.appendChild(window.pin.createPins());
             }
             isActivate = true;
+            window.map.isActivate = true;
             activatePage();
+            window.backend.load(onLoadSuccess, onLoadError);
         }
 
         window.form.writeAddress();
     }
 
+    function enablePageByMouse() {
+        changeStateToActive();
+    }
+
+    /**
+     * активация страницы по нажатию клавиши
+     * @param {Object} evt
+     */
     function enablePageByKey(evt) {
-        if (isFirstLoad ? !isActivate : !isActivate) {
-            if (isFirstLoad) {
-                isFirstLoad = false;
-                mapPins.appendChild(window.pin.createPins());
-            }
-
-            if (evt.keyCode === window.card.Keycode.ENTER) {
-                isActivate = true;
-                activatePage();
-            }
+        if (evt.keyCode === window.card.KEY_CODES.ENTER) {
+            changeStateToActive();
         }
-
-        window.form.writeAddress();
     }
+
+    window.pin.mapPinMain.addEventListener('mousedown', enablePageByMouse);
+    window.pin.mapPinMain.addEventListener('keydown', enablePageByKey);
 
     // перемещение метки
     window.pin.mapPinMain.addEventListener('mousedown', function (evt) {
@@ -111,9 +127,6 @@
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
     });
-
-    window.pin.mapPinMain.addEventListener('mousedown', enablePageByMouse);
-    window.pin.mapPinMain.addEventListener('keydown', enablePageByKey);
 
     window.map = {
         mapPins: mapPins,
