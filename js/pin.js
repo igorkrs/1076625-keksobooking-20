@@ -23,8 +23,6 @@
             pinsFragment = document.createDocumentFragment(),
             offer;
 
-        // window.card.getRandomOffer();
-
         data.forEach(el => {
             offer = createOffer(el);
             pinsFragment.appendChild(offer);
@@ -59,7 +57,6 @@
     }
 
     window.pin = {
-        // pins: pins,
         pinParams: pinParams,
         mapPinMain: mapPinMain,
         createOffer: createOffer,

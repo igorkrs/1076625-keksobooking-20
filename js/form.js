@@ -9,6 +9,11 @@
             'palace': 10000
         },
 
+        PIN_DEFAULT = {
+            X: 570,
+            Y: 375
+        },
+
         adForm = document.querySelector('.ad-form'),
         adFormFieldsets = adForm.querySelectorAll('fieldset'),
         adFormRoomsNumber = adForm.querySelector('#room_number'),
@@ -39,6 +44,30 @@
 
     adForm.querySelector('#address').setAttribute('readonly', 'readonly');
     adFormPrice.placeholder = OFFER_PRICE.flat;
+
+    function deactivatePage() {
+        adForm.reset();
+        mapFilters.reset();
+        window.filter.removePins();
+        // window.photoLoad.removePhotos();
+        setDefaultRoomsStatus();
+        window.map.mapMain.classList.add('map--faded');
+        adForm.classList.add('ad-form--disabled');
+        adFormFieldsets.forEach(setDisableAttribute);
+        window.map.mapFiltersSelect.forEach(setDisableAttribute);
+        mapFiltersFeatures.forEach(setDisableAttribute);
+        window.card.removeCard();
+        window.pin.mapPinMain.style.left = PIN_DEFAULT.X + 'px';
+        window.pin.mapPinMain.style.top = PIN_DEFAULT.Y + 'px';
+        window.map.isActivate = false;
+    }
+
+    // действия при нажатии на кнопку "очистить"
+    resetButton.addEventListener('click', function (evt) {
+        evt.preventDefault();
+        deactivatePage();
+        writeInactiveAdress();
+    });
 
     /**
      * устанавливаю элементам массива атрибут disabled
@@ -107,18 +136,34 @@
         }
     }
 
-    adFormTimeContainer.addEventListener('change', function (evt) {
-        var targetValue = evt.target.value;
+    function timeInSelect() {
+        adFormTimeOut.value = adFormTimeIn.value;
+    }
 
-        switch (targetValue) {
-            case adFormTimeIn.value:
-                adFormTimeOut.value = adFormTimeIn.value;
-                break;
-            case adFormTimeOut.value:
-                adFormTimeIn.value = adFormTimeOut.value;
-                break;
-        }
-    });
+    function timeOutSelect() {
+        adFormTimeIn.value = adFormTimeOut.value;
+    }
+
+    adFormTimeIn.addEventListener('change', timeInSelect);
+    adFormTimeOut.addEventListener('change', timeOutSelect);
+
+    function formSubmitSuccessHandler() {
+        window.success.getSuccessMessage();
+        deactivatePage();
+        writeInactiveAdress();
+    }
+
+    function formSubmitErrorHandler(errorMessage) {
+        window.error.getErrorMessage(errorMessage);
+    }
+
+    function formSubmitHandler(evt) {
+        evt.preventDefault();
+        var data = new FormData(adForm);
+        window.backend.upload(formSubmitSuccessHandler, formSubmitErrorHandler, data);
+    }
+
+    adForm.addEventListener('submit', formSubmitHandler);
 
     function setDefaultRoomsStatus() {
         adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
