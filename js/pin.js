@@ -1,65 +1,93 @@
 'use strict';
 
-(function () {
+(function() {
+  var
+    pinParams = {
+      // размер метки доступного предложения
+      PIN_SIZE_WIDTH: 50,
+      PIN_SIZE_HEIGHT: 70,
+
+      // размер перемещаемой метки
+      MAIN_SIZE_WIDTH: 65,
+      MAIN_SIZE_HEIGHT: 84,
+
+      // минимальная координата по Y
+      MIN_Y: 130,
+      // максимальная координата по Y
+      MAX_Y: 630
+    },
+
+    mapPinMain = document.querySelector('.map__pin--main'),
+    mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+
+  /**
+   * создание меток
+   * @param {array} data
+   */
+  function createPins(data) {
     var
-        pinParams = {
-            PIN_SIZE_WIDTH: 50,
-            PIN_SIZE_HEIGHT: 70,
+      pinsFragment = document.createDocumentFragment(),
+      offer;
 
-            MAIN_SIZE_WIDTH: 65,
-            MAIN_SIZE_HEIGHT: 84,
+    data.forEach(function(el) {
+      offer = createOffer(el);
+      pinsFragment.appendChild(offer);
+    });
 
-            LIMIT: 8,
+    return pinsFragment;
+  }
 
-            MIN_Y: 130,
-            MAX_Y: 630
-        },
+  /**
+   * создание копий метки
+   * @param {array} data
+   */
+  function createOffer(data) {
+    var
+      offerPin = mapPinTemplate.cloneNode(true),
+      image = offerPin.querySelector('img');
 
-        mapPinMain = document.querySelector('.map__pin--main'),
-        mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+    offerPin.style.left = (data.location.x - window.pin.pinParams.PIN_SIZE_WIDTH / 2) + 'px';
+    offerPin.style.top = (data.location.y - window.pin.pinParams.PIN_SIZE_HEIGHT) + 'px';
+    image.src = data.author.avatar;
+    image.alt = data.offer.title;
 
-    function createPins(data) {
-        var
-            pinsFragment = document.createDocumentFragment(),
-            offer;
+    /**
+     * открытие подробной информации при нажатии на метку
+     */
+    function onPinClick() {
+      var mapCard = document.querySelector('.map__card');
 
-        data.forEach(el => {
-            offer = createOffer(el);
-            pinsFragment.appendChild(offer);
-        });
+      if (mapCard) {
+        mapCard.remove();
+      }
 
-        return pinsFragment;
+      window.card.renderCard(data);
     }
 
-    function createOffer(data) {
-        var
-            offerPin = mapPinTemplate.cloneNode(true),
-            image = offerPin.querySelector('img');
+    offerPin.addEventListener('click', onPinClick);
 
-        offerPin.style.left = (data.location.x - window.pin.pinParams.PIN_SIZE_WIDTH / 2) + 'px';
-        offerPin.style.top = (data.location.y - window.pin.pinParams.PIN_SIZE_HEIGHT) + 'px';
-        image.src = data.author.avatar;
-        image.alt = data.offer.title;
+    return offerPin;
+  }
 
-        function onPinClick() {
-            var mapCard = document.querySelector('.map__card');
+  /**
+   * удаление активного класса у меток
+   * @param {HTMLElement} pin
+   */
+  function removePinActiveClass(pin) {
+    var pins = document.querySelectorAll('.map__pin[type="button"]');
 
-            if (mapCard) {
-                mapCard.remove();
-            }
+    pins.forEach(function(elem) {
+      elem.classList.remove('map__pin--active');
+    });
 
-            window.card.renderCard(data);
-        }
+    pin.classList.add('map__pin--active');
+  }
 
-        offerPin.addEventListener('click', onPinClick);
-
-        return offerPin;
-    }
-
-    window.pin = {
-        pinParams: pinParams,
-        mapPinMain: mapPinMain,
-        createOffer: createOffer,
-        createPins: createPins
-    };
+  window.pin = {
+    pinParams: pinParams,
+    mapPinMain: mapPinMain,
+    removePinActiveClass: removePinActiveClass,
+    createOffer: createOffer,
+    createPins: createPins
+  };
 })();
