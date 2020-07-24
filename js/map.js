@@ -85,7 +85,7 @@
   window.pin.mapPinMain.addEventListener('keydown', enablePageByKey);
 
   // перемещение метки
-  window.pin.mapPinMain.addEventListener('mousedown', function(evt) {
+  window.pin.mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {

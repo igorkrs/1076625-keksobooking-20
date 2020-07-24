@@ -34,7 +34,7 @@
     var photos = photoChooser.files;
     var photosArray = Array.from(photos);
 
-    photosArray.forEach(function(photo) {
+    photosArray.forEach(function (photo) {
       var photosName = photo.name.toLowerCase();
       var matchesPhotos = hasMatchesPhotos(photosName);
 
@@ -45,7 +45,7 @@
   });
 
   function hasMatchesPhotos(name) {
-    return FILE_TYPES.some(function(it) {
+    return FILE_TYPES.some(function (it) {
       return name.endsWith(it);
     });
   }
@@ -78,7 +78,7 @@
 
       createEmptyBlock();
 
-      photoTemplate.forEach(function(el) {
+      photoTemplate.forEach(function (el) {
         if (!el.hasChildNodes()) {
           el.appendChild(image);
         }

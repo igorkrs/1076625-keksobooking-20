@@ -67,7 +67,7 @@
   }
 
   // действия при нажатии на кнопку "очистить"
-  resetButton.addEventListener('click', function(evt) {
+  resetButton.addEventListener('click', function (evt) {
     evt.preventDefault();
     deactivatePage();
     writeInactiveAdress();
@@ -148,7 +148,7 @@
   }
 
   // синхронная смена времени отъезда/заезда
-  adFormTimeContainer.addEventListener('change', function(evt) {
+  adFormTimeContainer.addEventListener('change', function (evt) {
     var targetValue = evt.target.value;
 
     switch (targetValue) {

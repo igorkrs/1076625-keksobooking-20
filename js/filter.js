@@ -70,18 +70,18 @@
     function filterByFeatures(offerFeatures) {
 
       // создание массива из выбранных удобств
-      var checked = featuresArray.filter(function(elem) {
+      var checked = featuresArray.filter(function (elem) {
         return elem.checked === true;
       });
 
       // поиск вариантов, которые содержат в себе все выделенные удобства
-      return checked.every(function(elem) {
+      return checked.every(function (elem) {
         return offerFeatures.indexOf(elem.value) > -1;
       });
     }
 
     // проверка соответствия меток по всем вариантам из фильтрации, если подходит, то записывается в массив
-    var filteredPins = allPins.filter(function(el) {
+    var filteredPins = allPins.filter(function (el) {
       return filterByParams(el.offer.type, housingType.value) &&
         filterByParams(el.offer.rooms, housingRooms.value) &&
         filterByParams(el.offer.guests, housingGuests.value) &&

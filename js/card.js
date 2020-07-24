@@ -28,7 +28,7 @@
     var featuresFragment = document.createDocumentFragment();
     var featuresElement;
 
-    features.forEach(function(element) {
+    features.forEach(function (element) {
       featuresElement = document.createElement('li');
       featuresElement.className = 'popup__feature popup__feature--' + element;
 
@@ -49,7 +49,7 @@
     var photosElement;
     var photoImg;
 
-    photos.forEach(function(el) {
+    photos.forEach(function (el) {
       photosTemplate = cardTemplate.content.querySelector('.popup__photos');
       photosElement = photosTemplate.cloneNode(true);
       photoImg = photosElement.querySelector('img');

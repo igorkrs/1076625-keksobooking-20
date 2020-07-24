@@ -28,7 +28,7 @@
     var pinsFragment = document.createDocumentFragment();
     var offer;
 
-    data.forEach(function(el) {
+    data.forEach(function (el) {
       offer = createOffer(el);
       pinsFragment.appendChild(offer);
     });
@@ -75,7 +75,7 @@
   function removePinActiveClass(pin) {
     var pins = document.querySelectorAll('.map__pin[type="button"]');
 
-    pins.forEach(function(elem) {
+    pins.forEach(function (elem) {
       elem.classList.remove('map__pin--active');
     });
 
