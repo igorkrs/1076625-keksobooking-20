@@ -7,30 +7,6 @@
             ESC: 27
         },
 
-        // offerOptions = {
-        //     TITLE: [
-        //         'Первый заголовок',
-        //         'Второй заголовок',
-        //         'Третий заголовок',
-        //         'Четвертый заголовок'
-        //     ],
-        //     FEATURES: ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
-        //     ROOM_TYPE: ['palace', 'flat', 'house', 'bungalo'],
-        //     CHECKIN: ['12:00', '13:00', '14:00'],
-        //     CHECKOUT: ['12:00', '13:00', '14:00'],
-        //     DESRIPTION: [
-        //         'Первое описание',
-        //         'Второе описание',
-        //         'Третье описание',
-        //         'Четвертое писание'
-        //     ],
-        //     PHOTOS: [
-        //         'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-        //         'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-        //         'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-        //     ]
-        // },
-
         rooms = ['комната', 'комнаты', 'комнат'],
         guests = ['гостя', 'гостей', 'гостей'],
         cardFilter = document.querySelector('.map__filters-container'),
@@ -42,43 +18,6 @@
             'house': 'Дом',
             'palace': 'Дворец'
         };
-
-    // function getRandomOffer() {
-    //     for (var i = 0; i < window.pin.pinParams.LIMIT; i++) {
-    //         var
-    //             locationX = window.utils.getRandomNumber(0 + window.pin.pinParams.PIN_SIZE_WIDTH, window.map.mapMain.clientWidth - window.pin.pinParams.PIN_SIZE_WIDTH),
-    //             locationY = window.utils.getRandomNumber(window.pin.pinParams.MIN_Y, window.pin.pinParams.MAX_Y);
-
-    //         var offer = {
-    //             author: {
-    //                 avatar: 'img/avatars/user0' + (i + 1) + '.png'
-    //             },
-
-    //             offer: {
-    //                 title: 'Заголовок предложения',
-    //                 adress: '600, 350',
-    //                 price: window.utils.getRandomNumber(1, 5000),
-    //                 type: window.utils.getRandomElement(offerOptions.ROOM_TYPE),
-    //                 rooms: window.utils.getRandomNumber(1, 4),
-    //                 guests: window.utils.getRandomNumber(1, 4),
-    //                 checkin: window.utils.getRandomElement(offerOptions.CHECKIN),
-    //                 checkout: window.utils.getRandomElement(offerOptions.CHECKOUT),
-    //                 features: window.utils.shuffleArray(offerOptions.FEATURES),
-    //                 description: window.utils.getRandomElement(offerOptions.DESRIPTION),
-    //                 photos: window.utils.shuffleArray(offerOptions.PHOTOS)
-    //             },
-
-    //             location: {
-    //                 x: locationX,
-    //                 y: locationY
-    //             }
-    //         };
-
-    //         window.pin.pins.push(offer);
-    //     }
-
-    //     return window.pin.pins;
-    // }
 
     /**
      * создаю отображение удобств
@@ -186,7 +125,7 @@
 
     window.card = {
         Keycode: Keycode,
-        // getRandomOffer: getRandomOffer,
+        onEscDown: onEscDown,
         renderCard: renderCard,
         removeCard: removeCard
     };
