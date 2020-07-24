@@ -8,9 +8,8 @@
    * @return {string}
    */
   function declension(num, expressions) {
-    var
-      result,
-      count = num % 100;
+    var result;
+    var count = num % 100;
 
     if (count >= 5 && count <= 20) {
       result = expressions['2'];

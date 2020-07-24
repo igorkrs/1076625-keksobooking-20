@@ -1,48 +1,47 @@
 'use strict';
 
 (function() {
-  var
-    // минимальные цены за тип жилья
-    OFFER_PRICE = {
-      'bungalo': 0,
-      'flat': 1000,
-      'house': 5000,
-      'palace': 10000
-    },
+  // минимальные цены за тип жилья
+  var OFFER_PRICE = {
+    'bungalo': 0,
+    'flat': 1000,
+    'house': 5000,
+    'palace': 10000
+  };
 
-    // место, где находится перетаскиваемая метка по дефолту
-    PIN_DEFAULT = {
-      X: 570,
-      Y: 375
-    },
+  // место, где находится перетаскиваемая метка по дефолту
+  var PIN_DEFAULT = {
+    X: 570,
+    Y: 375
+  };
 
-    adForm = document.querySelector('.ad-form'),
-    adFormFieldsets = adForm.querySelectorAll('fieldset'),
-    adFormRoomsNumber = adForm.querySelector('#room_number'),
-    adFormGuestsNumber = adForm.querySelector('#capacity'),
-    guestsOptions = adFormGuestsNumber.querySelectorAll('option'),
-    adFormTitle = adForm.querySelector('#title'),
-    adFormTimeIn = adForm.querySelector('#timein'),
-    adFormTimeOut = adForm.querySelector('#timeout'),
-    adFormPrice = adForm.querySelector('#price'),
-    adFormType = adForm.querySelector('#type'),
-    adFormTimeContainer = adForm.querySelector('.ad-form__element--time'),
-    addressInput = adForm.querySelector('#address'),
-    resetButton = adForm.querySelector('.ad-form__reset'),
-    mapFilters = document.querySelector('.map__filters'),
-    mapFiltersFeatures = mapFilters.querySelectorAll('input'),
+  var adForm = document.querySelector('.ad-form');
+  var adFormFieldsets = adForm.querySelectorAll('fieldset');
+  var adFormRoomsNumber = adForm.querySelector('#room_number');
+  var adFormGuestsNumber = adForm.querySelector('#capacity');
+  var guestsOptions = adFormGuestsNumber.querySelectorAll('option');
+  var adFormTitle = adForm.querySelector('#title');
+  var adFormTimeIn = adForm.querySelector('#timein');
+  var adFormTimeOut = adForm.querySelector('#timeout');
+  var adFormPrice = adForm.querySelector('#price');
+  var adFormType = adForm.querySelector('#type');
+  var adFormTimeContainer = adForm.querySelector('.ad-form__element--time');
+  var addressInput = adForm.querySelector('#address');
+  var resetButton = adForm.querySelector('.ad-form__reset');
+  var mapFilters = document.querySelector('.map__filters');
+  var mapFiltersFeatures = mapFilters.querySelectorAll('input');
 
-    guestsParams = {
-      ANY: guestsOptions[0],
-      ONE_GUEST: guestsOptions[1],
-      TWO_GUESTS: guestsOptions[2],
-      NOT_FOR_GUESTS: guestsOptions[3],
-    },
+  var guestsParams = {
+    ANY: guestsOptions[0],
+    ONE_GUEST: guestsOptions[1],
+    TWO_GUESTS: guestsOptions[2],
+    NOT_FOR_GUESTS: guestsOptions[3],
+  };
 
-    guestsIndex = {
-      ONE: 2,
-      NO_ONE: 3
-    };
+  var guestsIndex = {
+    ONE: 2,
+    NO_ONE: 3
+  };
 
   adForm.querySelector('#address').setAttribute('readonly', 'readonly');
   adFormPrice.placeholder = OFFER_PRICE.flat;
@@ -109,9 +108,8 @@
    * выбор типа жилья и минимальной цены
    */
   function setTypeOrPrice() {
-    var
-      typeValue = adFormType.value,
-      priceValue = adFormPrice.value;
+    var typeValue = adFormType.value;
+    var priceValue = adFormPrice.value;
 
     switch (typeValue) {
       case 'bungalo':

@@ -1,18 +1,17 @@
 'use strict';
 
 (function() {
-  var
-    mapFiltersSelect = window.form.mapFilters.querySelectorAll('select'),
-    mapMain = document.querySelector('.map'),
-    mapPins = document.querySelector('.map__pins'),
+  var mapFiltersSelect = window.form.mapFilters.querySelectorAll('select');
+  var mapMain = document.querySelector('.map');
+  var mapPins = document.querySelector('.map__pins');
 
-    // состояние при первой загрузке страницы
-    isFirstLoad = true,
-    // состояние активности страницы
-    isActivate = false,
+  // состояние при первой загрузке страницы
+  var isFirstLoad = true;
+  // состояние активности страницы
+  var isActivate = false;
 
-    // максимальное число отображаемых меток
-    MAX_PINS = 5;
+  // максимальное число отображаемых меток
+  var MAX_PINS = 5;
 
   /**
    * при успешной загрузке данных с сервера

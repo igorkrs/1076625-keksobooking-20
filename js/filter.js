@@ -2,20 +2,20 @@
 
 (function() {
   // макисмальное число отображаемых предложений
-  var MAX_PINS = 5,
+  var MAX_PINS = 5;
 
-    OFFER_VALUE = {
-      min: 10000,
-      max: 50000
-    },
+  var OFFER_VALUE = {
+    min: 10000,
+    max: 50000
+  };
 
-    filtres = document.querySelector('.map__filters'),
-    housingType = filtres.querySelector('#housing-type'),
-    housingPrice = filtres.querySelector('#housing-price'),
-    housingRooms = filtres.querySelector('#housing-rooms'),
-    housingGuests = filtres.querySelector('#housing-guests'),
-    housingFeatures = filtres.querySelector('#housing-features'),
-    featuresArray = Array.from(housingFeatures.querySelectorAll('[name="features"]'));
+  var filtres = document.querySelector('.map__filters');
+  var housingType = filtres.querySelector('#housing-type');
+  var housingPrice = filtres.querySelector('#housing-price');
+  var housingRooms = filtres.querySelector('#housing-rooms');
+  var housingGuests = filtres.querySelector('#housing-guests');
+  var housingFeatures = filtres.querySelector('#housing-features');
+  var featuresArray = Array.from(housingFeatures.querySelectorAll('[name="features"]'));
 
   /**
    * удаление всех меток

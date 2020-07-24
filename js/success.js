@@ -5,10 +5,9 @@
    * получение сообщения об успешной отправки данных на сервер
    */
   function getSuccessMessage() {
-    var
-      successTemplate = document.querySelector('#success').content.querySelector('.success'),
-      successElement = successTemplate.cloneNode(true),
-      main = document.querySelector('main');
+    var successTemplate = document.querySelector('#success').content.querySelector('.success');
+    var successElement = successTemplate.cloneNode(true);
+    var main = document.querySelector('main');
 
     /**
      * закрытие окна успешной отправки данных

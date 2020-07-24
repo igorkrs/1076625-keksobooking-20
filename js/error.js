@@ -6,11 +6,10 @@
    * @param {string} errorMessage
    */
   function getErrorMessage(errorMessage) {
-    var
-      errorTemplate = document.querySelector('#error').content.querySelector('.error'),
-      errorElement = errorTemplate.cloneNode(true),
-      main = document.querySelector('main'),
-      errorButton = errorElement.querySelector('.error__button');
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorElement = errorTemplate.cloneNode(true);
+    var main = document.querySelector('main');
+    var errorButton = errorElement.querySelector('.error__button');
 
     /**
      * закрытие окна с ошибкой

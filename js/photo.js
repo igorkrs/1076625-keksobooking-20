@@ -1,24 +1,22 @@
 'use strict';
 
 (function() {
-  var
-    FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'],
-    avatarChooser = document.querySelector('.ad-form__field input[type=file]'),
-    photoChooser = document.querySelector('.ad-form__upload input[type=file]'),
-    avatarPreview = document.querySelector('.ad-form-header__preview img'),
-    photoContainer = document.querySelector('.ad-form__photo-container'),
-    MUFFIN_PHOTO = 'img/muffin-grey.svg',
-    photoParams = {
-      WIDTH: '100%',
-      HEIGHT: '100%'
-    };
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+  var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
+  var photoChooser = document.querySelector('.ad-form__upload input[type=file]');
+  var avatarPreview = document.querySelector('.ad-form-header__preview img');
+  var photoContainer = document.querySelector('.ad-form__photo-container');
+  var MUFFIN_PHOTO = 'img/muffin-grey.svg';
+  var photoParams = {
+    WIDTH: '100%',
+    HEIGHT: '100%'
+  };
 
   // добавление фотографиb (для карты) при нажатии
   avatarChooser.addEventListener('change', function() {
-    var
-      avatar = avatarChooser.files[0],
-      avatarName = avatar.name.toLowerCase(),
-      matchesAvatar = hasMatchesPhotos(avatarName);
+    var avatar = avatarChooser.files[0];
+    var avatarName = avatar.name.toLowerCase();
+    var matchesAvatar = hasMatchesPhotos(avatarName);
 
     if (matchesAvatar) {
       var avatarReader = new FileReader();
@@ -33,14 +31,12 @@
 
   // добавление фотографии жилья с множественным превью
   photoChooser.addEventListener('change', function() {
-    var
-      photos = photoChooser.files,
-      photosArray = Array.from(photos);
+    var photos = photoChooser.files;
+    var photosArray = Array.from(photos);
 
     photosArray.forEach(function(photo) {
-      var
-        photosName = photo.name.toLowerCase(),
-        matchesPhotos = hasMatchesPhotos(photosName);
+      var photosName = photo.name.toLowerCase();
+      var matchesPhotos = hasMatchesPhotos(photosName);
 
       if (matchesPhotos) {
         renderPhotos(photo);
@@ -73,9 +69,8 @@
     var photoReader = new FileReader();
 
     photoReader.addEventListener('load', function() {
-      var
-        image = document.createElement('img'),
-        photoTemplate = photoContainer.querySelectorAll('.ad-form__photo');
+      var image = document.createElement('img');
+      var photoTemplate = photoContainer.querySelectorAll('.ad-form__photo');
 
       image.src = photoReader.result;
       image.style.width = photoParams.WIDTH;

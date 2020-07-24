@@ -1,24 +1,23 @@
 'use strict';
 
 (function() {
-  var
-    Keycode = {
-      ENTER: 13,
-      ESC: 27
-    },
+  var Keycode = {
+    ENTER: 13,
+    ESC: 27
+  };
 
-    rooms = ['комната', 'комнаты', 'комнат'],
-    guests = ['гостя', 'гостей', 'гостей'],
-    cardFilter = document.querySelector('.map__filters-container'),
-    cardTemplate = document.querySelector('#card'),
+  var rooms = ['комната', 'комнаты', 'комнат'];
+  var guests = ['гостя', 'гостей', 'гостей'];
+  var cardFilter = document.querySelector('.map__filters-container');
+  var cardTemplate = document.querySelector('#card');
 
-    // перевод названий типа жилья
-    offerTypeTranslation = {
-      'flat': 'Квартира',
-      'bungalo': 'Бунгало',
-      'house': 'Дом',
-      'palace': 'Дворец'
-    };
+  // перевод названий типа жилья
+  var offerTypeTranslation = {
+    'flat': 'Квартира',
+    'bungalo': 'Бунгало',
+    'house': 'Дом',
+    'palace': 'Дворец'
+  };
 
   /**
    * создание отображения удобств
@@ -26,9 +25,8 @@
    * @return {node}
    */
   function createFeatures(features) {
-    var
-      featuresFragment = document.createDocumentFragment(),
-      featuresElement;
+    var featuresFragment = document.createDocumentFragment();
+    var featuresElement;
 
     features.forEach(function(element) {
       featuresElement = document.createElement('li');
@@ -46,11 +44,10 @@
    * @return {node}
    */
   function createPhotos(photos) {
-    var
-      photosFragment = document.createDocumentFragment(),
-      photosTemplate,
-      photosElement,
-      photoImg;
+    var photosFragment = document.createDocumentFragment();
+    var photosTemplate;
+    var photosElement;
+    var photoImg;
 
     photos.forEach(function(el) {
       photosTemplate = cardTemplate.content.querySelector('.popup__photos');
@@ -96,9 +93,8 @@
    * @returns {node}
    */
   function renderCard(card) {
-    var
-      cardFragment = document.createDocumentFragment(),
-      cardElement = cardTemplate.content.querySelector('.map__card').cloneNode(true);
+    var cardFragment = document.createDocumentFragment();
+    var cardElement = cardTemplate.content.querySelector('.map__card').cloneNode(true);
 
     cardElement.querySelector('.popup__avatar').src = card.author.avatar;
     cardElement.querySelector('.popup__title').textContent = card.offer.title;

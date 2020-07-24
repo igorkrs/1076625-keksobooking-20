@@ -1,33 +1,31 @@
 'use strict';
 
 (function() {
-  var
-    pinParams = {
-      // размер метки доступного предложения
-      PIN_SIZE_WIDTH: 50,
-      PIN_SIZE_HEIGHT: 70,
+  var pinParams = {
+    // размер метки доступного предложения
+    PIN_SIZE_WIDTH: 50,
+    PIN_SIZE_HEIGHT: 70,
 
-      // размер перемещаемой метки
-      MAIN_SIZE_WIDTH: 65,
-      MAIN_SIZE_HEIGHT: 84,
+    // размер перемещаемой метки
+    MAIN_SIZE_WIDTH: 65,
+    MAIN_SIZE_HEIGHT: 84,
 
-      // минимальная координата по Y
-      MIN_Y: 130,
-      // максимальная координата по Y
-      MAX_Y: 630
-    },
+    // минимальная координата по Y
+    MIN_Y: 130,
+    // максимальная координата по Y
+    MAX_Y: 630
+  };
 
-    mapPinMain = document.querySelector('.map__pin--main'),
-    mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var mapPinMain = document.querySelector('.map__pin--main');
+  var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   /**
    * создание меток
    * @param {array} data
    */
   function createPins(data) {
-    var
-      pinsFragment = document.createDocumentFragment(),
-      offer;
+    var pinsFragment = document.createDocumentFragment();
+    var offer;
 
     data.forEach(function(el) {
       offer = createOffer(el);
@@ -42,9 +40,8 @@
    * @param {array} data
    */
   function createOffer(data) {
-    var
-      offerPin = mapPinTemplate.cloneNode(true),
-      image = offerPin.querySelector('img');
+    var offerPin = mapPinTemplate.cloneNode(true);
+    var image = offerPin.querySelector('img');
 
     offerPin.style.left = (data.location.x - window.pin.pinParams.PIN_SIZE_WIDTH / 2) + 'px';
     offerPin.style.top = (data.location.y - window.pin.pinParams.PIN_SIZE_HEIGHT) + 'px';
