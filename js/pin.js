@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var pinParams = {
     // размер метки доступного предложения
     PIN_SIZE_WIDTH: 50,
@@ -22,6 +22,7 @@
   /**
    * создание меток
    * @param {array} data
+   * @return {node}
    */
   function createPins(data) {
     var pinsFragment = document.createDocumentFragment();
@@ -38,6 +39,7 @@
   /**
    * создание копий метки
    * @param {array} data
+   * @return {node}
    */
   function createOffer(data) {
     var offerPin = mapPinTemplate.cloneNode(true);

@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
   var photoChooser = document.querySelector('.ad-form__upload input[type=file]');
@@ -13,7 +13,7 @@
   };
 
   // добавление фотографиb (для карты) при нажатии
-  avatarChooser.addEventListener('change', function() {
+  avatarChooser.addEventListener('change', function () {
     var avatar = avatarChooser.files[0];
     var avatarName = avatar.name.toLowerCase();
     var matchesAvatar = hasMatchesPhotos(avatarName);
@@ -21,7 +21,7 @@
     if (matchesAvatar) {
       var avatarReader = new FileReader();
 
-      avatarReader.addEventListener('load', function() {
+      avatarReader.addEventListener('load', function () {
         avatarPreview.src = avatarReader.result;
       });
 
@@ -30,7 +30,7 @@
   });
 
   // добавление фотографии жилья с множественным превью
-  photoChooser.addEventListener('change', function() {
+  photoChooser.addEventListener('change', function () {
     var photos = photoChooser.files;
     var photosArray = Array.from(photos);
 
@@ -68,7 +68,7 @@
   function renderPhotos(photos) {
     var photoReader = new FileReader();
 
-    photoReader.addEventListener('load', function() {
+    photoReader.addEventListener('load', function () {
       var image = document.createElement('img');
       var photoTemplate = photoContainer.querySelectorAll('.ad-form__photo');
 

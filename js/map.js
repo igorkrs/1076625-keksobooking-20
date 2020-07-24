@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var mapFiltersSelect = window.form.mapFilters.querySelectorAll('select');
   var mapMain = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');

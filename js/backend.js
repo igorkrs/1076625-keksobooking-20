@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var serverUrls = {
     LOAD: 'https://javascript.pages.academy/keksobooking/data',
     UPLOAD: 'https://javascript.pages.academy/keksobooking'
@@ -12,7 +12,7 @@
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
-    xhr.addEventListener('load', function() {
+    xhr.addEventListener('load', function () {
       switch (xhr.status) {
         case 200:
           onSuccess(xhr.response);
@@ -31,11 +31,11 @@
       }
     });
 
-    xhr.addEventListener('error', function() {
+    xhr.addEventListener('error', function () {
       onError('Произошла ошибка соединения.');
     });
 
-    xhr.addEventListener('timeout', function() {
+    xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 

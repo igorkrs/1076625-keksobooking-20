@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   // макисмальное число отображаемых предложений
   var MAX_PINS = 5;
 
@@ -31,7 +31,7 @@
   /**
    * отображение метки согласно заданным параметрам
    */
-  var updatePins = window.debounce(function() {
+  var updatePins = window.debounce(function () {
     var allPins = window.allPins;
 
     /**
@@ -97,7 +97,7 @@
   });
 
   // при смене вариантов в фильтре, происходит удаление старых карточек и отображаются новые
-  filtres.addEventListener('change', function() {
+  filtres.addEventListener('change', function () {
     window.card.removeCard();
     updatePins();
   });

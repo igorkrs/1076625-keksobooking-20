@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   /**
    * склонение слов
    * @param {number} num число, в зависимости от которого будем склонять
@@ -29,5 +29,5 @@
 
   window.utils = {
     declension: declension
-  }
+  };
 })();

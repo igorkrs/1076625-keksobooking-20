@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   /**
    * отобржаение окна ошибки загрузки данных
    * @param {string} errorMessage

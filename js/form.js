@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   // минимальные цены за тип жилья
   var OFFER_PRICE = {
     'bungalo': 0,
@@ -92,7 +92,7 @@
   adFormFieldsets.forEach(setDisableAttribute);
 
   // подсказки полей при неправильно введенных данных
-  adFormTitle.addEventListener('invalid', function() {
+  adFormTitle.addEventListener('invalid', function () {
     if (adFormTitle.validity.tooShort) {
       adFormTitle.setCustomValidity('Минимальная длина — 30 символов.');
     } else if (adFormTitle.validity.tooLong) {
@@ -175,7 +175,7 @@
   setDefaultRoomsStatus();
 
   // установка подходящих условий при выборе количества комнат
-  adFormRoomsNumber.addEventListener('change', function() {
+  adFormRoomsNumber.addEventListener('change', function () {
     var roomsNumber = adFormRoomsNumber.value;
 
     switch (roomsNumber) {

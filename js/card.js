@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function () {
   var Keycode = {
     ENTER: 13,
     ESC: 27
@@ -90,7 +90,7 @@
   /**
    * отображение карточки подробной информации
    * @param {Object} card
-   * @returns {node}
+   * @return {node}
    */
   function renderCard(card) {
     var cardFragment = document.createDocumentFragment();
