@@ -98,7 +98,7 @@
       avatarPreview.src = MUFFIN_PHOTO;
     }
 
-    photoTemplate.forEach(function(el) {
+    photoTemplate.forEach(function (el) {
       if (el.hasChildNodes()) {
         el.remove();
       }

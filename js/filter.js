@@ -23,7 +23,7 @@
   function removePins() {
     var allPinsElem = document.querySelectorAll('.map__pin[type="button"]');
 
-    allPinsElem.forEach(function(it) {
+    allPinsElem.forEach(function (it) {
       it.remove();
     });
   }
