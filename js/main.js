@@ -89,6 +89,18 @@ var isActivate = false;
 
 var addressInput = adForm.querySelector('#address');
 adForm.querySelector('#address').setAttribute('readonly', 'readonly');
+var adFormTimeContainer = adForm.querySelector('.ad-form__element--time');
+
+var guestsParams = {
+    ANY: guestsOptions[0],
+    ONE_GUEST: guestsOptions[1],
+    TWO_GUESTS: guestsOptions[2],
+    NOT_FOR_GUESTS: guestsOptions[3],
+};
+var guestsIndex = {
+    ONE: 2,
+    NO_ONE: 3
+};
 
 /**
  * получаю случайное число
@@ -410,7 +422,62 @@ function setTypeOrPrice() {
     }
 }
 
-adFormPrice.setAttribute('max', '1000000');
+adFormTimeContainer.addEventListener('change', function (evt) {
+    var targetValue = evt.target.value;
+
+    switch (targetValue) {
+        case adFormTimeIn.value:
+            adFormTimeOut.value = adFormTimeIn.value;
+            break;
+        case adFormTimeOut.value:
+            adFormTimeIn.value = adFormTimeOut.value;
+            break;
+    }
+});
+
+function setDefaultRoomsStatus() {
+    adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
+    guestsParams.ANY.disabled = true;
+    guestsParams.ONE_GUEST.disabled = true;
+    guestsParams.TWO_GUESTS.disabled = false;
+    guestsParams.NOT_FOR_GUESTS.disabled = true;
+}
+
+setDefaultRoomsStatus();
+
+adFormRoomsNumber.addEventListener('change', function () {
+    var roomsNumber = adFormRoomsNumber.value;
+
+    switch (roomsNumber) {
+        case '1':
+            adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
+            guestsParams.ANY.disabled = true;
+            guestsParams.ONE_GUEST.disabled = true;
+            guestsParams.TWO_GUESTS.disabled = false;
+            guestsParams.NOT_FOR_GUESTS.disabled = true;
+            break;
+        case '2':
+            adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
+            guestsParams.ANY.disabled = true;
+            guestsParams.ONE_GUEST.disabled = false;
+            guestsParams.TWO_GUESTS.disabled = false;
+            guestsParams.NOT_FOR_GUESTS.disabled = true;
+            break;
+        case '3':
+            adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
+            guestsParams.ANY.disabled = false;
+            guestsParams.ONE_GUEST.disabled = false;
+            guestsParams.TWO_GUESTS.disabled = false;
+            guestsParams.NOT_FOR_GUESTS.disabled = true;
+            break;
+        default:
+            adFormGuestsNumber.selectedIndex = guestsIndex.NO_ONE;
+            guestsParams.ANY.disabled = true;
+            guestsParams.ONE_GUEST.disabled = true;
+            guestsParams.TWO_GUESTS.disabled = true;
+            guestsParams.NOT_FOR_GUESTS.disabled = false;
+    }
+});
 
 adFormType.addEventListener('change', setTypeOrPrice);
 adFormPrice.addEventListener('change', setTypeOrPrice);
