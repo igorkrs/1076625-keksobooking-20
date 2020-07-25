@@ -12,11 +12,11 @@
   var cardTemplate = document.querySelector('#card');
 
   // перевод названий типа жилья
-  var offerTypeTranslation = {
-    'flat': 'Квартира',
-    'bungalo': 'Бунгало',
-    'house': 'Дом',
-    'palace': 'Дворец'
+  var OfferTypeTranslation = {
+    FLAT: 'Квартира',
+    BUNGALO: 'Бунгало',
+    HOUSE: 'Дом',
+    PALACE: 'Дворец'
   };
 
   /**
@@ -68,7 +68,7 @@
   /**
    * удаление карточки подробной информации
    */
-  function removeCard() {
+  function removeOffer() {
     var mapCard = document.querySelector('.map__card');
 
     if (mapCard) {
@@ -92,7 +92,7 @@
    * @param {Object} card
    * @return {node}
    */
-  function renderCard(card) {
+  function renderOffer(card) {
     var cardFragment = document.createDocumentFragment();
     var cardElement = cardTemplate.content.querySelector('.map__card').cloneNode(true);
 
@@ -100,7 +100,7 @@
     cardElement.querySelector('.popup__title').textContent = card.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = card.offer.address;
     cardElement.querySelector('.popup__text--price').textContent = card.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = offerTypeTranslation[card.offer.type];
+    cardElement.querySelector('.popup__type').textContent = OfferTypeTranslation[card.offer.type];
     cardElement.querySelector('.popup__text--capacity').textContent = card.offer.rooms + ' ' + window.utils.declension(card.offer.rooms, rooms) + ' для ' + card.offer.guests + ' ' + window.utils.declension(card.offer.guests, guests);
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
@@ -114,12 +114,12 @@
     /**
      * закрытие карточки подробной информации
      */
-    function closeCard() {
+    function closeOffer() {
       cardElement.remove();
-      window.pin.removePinActiveClass(cardElement);
+      window.pin.removeActiveClass(cardElement);
 
       // по клику
-      closeCardButton.addEventListener('click', closeCard);
+      closeCardButton.addEventListener('click', closeOffer);
       // при нажатии на ESC
       document.removeEventListener('keydown', onCardEsc);
     }
@@ -129,11 +129,11 @@
      * @param {Object} evt
      */
     function onCardEsc(evt) {
-      onEscDown(evt, closeCard);
+      onEscDown(evt, closeOffer);
     }
 
     // закрытие карточки по клику
-    closeCardButton.addEventListener('click', closeCard);
+    closeCardButton.addEventListener('click', closeOffer);
     // закрытие карточки по нажатию ESC
     document.addEventListener('keydown', onCardEsc);
 
@@ -146,7 +146,7 @@
   window.card = {
     Keycode: Keycode,
     onEscDown: onEscDown,
-    renderCard: renderCard,
-    removeCard: removeCard
+    renderOffer: renderOffer,
+    removeOffer: removeOffer
   };
 })();

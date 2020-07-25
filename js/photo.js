@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
+  var MUFFIN_PHOTO = 'img/muffin-grey.svg';
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var avatarChooser = document.querySelector('.ad-form__field input[type=file]');
   var photoChooser = document.querySelector('.ad-form__upload input[type=file]');
   var avatarPreview = document.querySelector('.ad-form-header__preview img');
   var photoContainer = document.querySelector('.ad-form__photo-container');
-  var MUFFIN_PHOTO = 'img/muffin-grey.svg';
-  var photoParams = {
+  var PhotoParams = {
     WIDTH: '100%',
     HEIGHT: '100%'
   };
@@ -73,8 +73,8 @@
       var photoTemplate = photoContainer.querySelectorAll('.ad-form__photo');
 
       image.src = photoReader.result;
-      image.style.width = photoParams.WIDTH;
-      image.style.height = photoParams.HEIGHT;
+      image.style.width = PhotoParams.WIDTH;
+      image.style.height = PhotoParams.HEIGHT;
 
       createEmptyBlock();
 

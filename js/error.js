@@ -5,25 +5,25 @@
    * отобржаение окна ошибки загрузки данных
    * @param {string} errorMessage
    */
-  function getErrorMessage(errorMessage) {
+  function getMessage(errorMessage) {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-    var errorElement = errorTemplate.cloneNode(true);
+    var element = errorTemplate.cloneNode(true);
     var main = document.querySelector('main');
-    var errorButton = errorElement.querySelector('.error__button');
+    var button = element.querySelector('.error__button');
 
     /**
      * закрытие окна с ошибкой
      */
     function closeError() {
-      main.removeChild(errorElement);
+      main.removeChild(element);
 
-      errorButton.removeEventListener('click', closeError);
-      document.removeEventListener('click', closeError);
+      button.removeEventListener('click', closeError);
+      document.removeEventListener('mousedown', closeError);
       document.removeEventListener('keydown', onErrorEsc);
     }
 
-    errorButton.addEventListener('click', closeError);
-    document.addEventListener('click', closeError);
+    button.addEventListener('click', closeError);
+    document.addEventListener('mousedown', closeError);
     document.addEventListener('keydown', onErrorEsc);
 
     /**
@@ -34,11 +34,11 @@
       window.card.onEscDown(evt, closeError);
     }
 
-    errorElement.querySelector('.error__message').textContent = errorMessage;
-    main.appendChild(errorElement);
+    element.querySelector('.error__message').textContent = errorMessage;
+    main.appendChild(element);
   }
 
   window.error = {
-    getErrorMessage: getErrorMessage
+    getMessage: getMessage
   };
 })();

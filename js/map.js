@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  // максимальное число отображаемых меток
+  var MAX_PINS = 5;
+
   var mapFiltersSelect = window.form.mapFilters.querySelectorAll('select');
   var mapMain = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
@@ -10,9 +13,6 @@
   // состояние активности страницы
   var isActivate = false;
 
-  // максимальное число отображаемых меток
-  var MAX_PINS = 5;
-
   /**
    * при успешной загрузке данных с сервера
    * @param {array} data
@@ -20,7 +20,7 @@
   function onLoadSuccess(data) {
     window.allPins = data;
     var allPinsSliced = window.allPins.slice(0, MAX_PINS);
-    mapPins.appendChild(window.pin.createPins(allPinsSliced));
+    mapPins.appendChild(window.pin.createMarks(allPinsSliced));
   }
 
   /**
@@ -28,7 +28,7 @@
    * @param {string} errorText
    */
   function onLoadError(errorText) {
-    window.error.getErrorMessage(errorText);
+    window.error.getMessage(errorText);
   }
 
   /**
@@ -36,8 +36,8 @@
    */
   function activatePage() {
     mapMain.classList.remove('map--faded');
-    window.form.adForm.classList.remove('ad-form--disabled');
-    window.form.adFormFieldsets.forEach(window.form.removeDisableAttribute);
+    window.form.ad.classList.remove('ad-form--disabled');
+    window.form.adFieldsets.forEach(window.form.removeDisableAttribute);
     mapFiltersSelect.forEach(window.form.removeDisableAttribute);
     window.form.mapFiltersFeatures.forEach(window.form.removeDisableAttribute);
   }
@@ -81,11 +81,11 @@
     }
   }
 
-  window.pin.mapPinMain.addEventListener('mousedown', enablePageByMouse);
-  window.pin.mapPinMain.addEventListener('keydown', enablePageByKey);
+  window.pin.mapMain.addEventListener('mousedown', enablePageByMouse);
+  window.pin.mapMain.addEventListener('keydown', enablePageByKey);
 
   // перемещение метки
-  window.pin.mapPinMain.addEventListener('mousedown', function (evt) {
+  window.pin.mapMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -111,23 +111,23 @@
       };
 
       // обозначение границ перемещения метки по оси X
-      var x = window.pin.mapPinMain.offsetLeft - shift.x;
-      if (x < (0 - window.pin.pinParams.MAIN_SIZE_WIDTH / 2)) {
-        x = (0 - window.pin.pinParams.MAIN_SIZE_WIDTH / 2);
-      } else if (x > (mapMain.clientWidth - window.pin.pinParams.MAIN_SIZE_WIDTH / 2)) {
-        x = (mapMain.clientWidth - window.pin.pinParams.MAIN_SIZE_WIDTH / 2);
+      var x = window.pin.mapMain.offsetLeft - shift.x;
+      if (x < (0 - window.pin.Params.MAIN_SIZE_WIDTH / 2)) {
+        x = (0 - window.pin.Params.MAIN_SIZE_WIDTH / 2);
+      } else if (x > (mapMain.clientWidth - window.pin.Params.MAIN_SIZE_WIDTH / 2)) {
+        x = (mapMain.clientWidth - window.pin.Params.MAIN_SIZE_WIDTH / 2);
       }
 
       // обозначение границ перемещения метки по оси Y
-      var y = window.pin.mapPinMain.offsetTop - shift.y;
-      if (y < (window.pin.pinParams.MIN_Y - window.pin.pinParams.MAIN_SIZE_HEIGHT)) {
-        y = window.pin.pinParams.MIN_Y - window.pin.pinParams.MAIN_SIZE_HEIGHT;
-      } else if (y > (window.pin.pinParams.MAX_Y - window.pin.pinParams.MAIN_SIZE_HEIGHT)) {
-        y = window.pin.pinParams.MAX_Y - window.pin.pinParams.MAIN_SIZE_HEIGHT;
+      var y = window.pin.mapMain.offsetTop - shift.y;
+      if (y < (window.pin.Params.MIN_Y - window.pin.Params.MAIN_SIZE_HEIGHT)) {
+        y = window.pin.Params.MIN_Y - window.pin.Params.MAIN_SIZE_HEIGHT;
+      } else if (y > (window.pin.Params.MAX_Y - window.pin.Params.MAIN_SIZE_HEIGHT)) {
+        y = window.pin.Params.MAX_Y - window.pin.Params.MAIN_SIZE_HEIGHT;
       }
 
-      window.pin.mapPinMain.style.left = x + 'px';
-      window.pin.mapPinMain.style.top = y + 'px';
+      window.pin.mapMain.style.left = x + 'px';
+      window.pin.mapMain.style.top = y + 'px';
 
       window.form.writeAddress();
     }

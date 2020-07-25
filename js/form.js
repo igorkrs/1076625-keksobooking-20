@@ -2,67 +2,67 @@
 
 (function () {
   // минимальные цены за тип жилья
-  var OFFER_PRICE = {
-    'bungalo': 0,
-    'flat': 1000,
-    'house': 5000,
-    'palace': 10000
+  var OfferPrice = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
   };
 
   // место, где находится перетаскиваемая метка по дефолту
-  var PIN_DEFAULT = {
+  var PinDefault = {
     X: 570,
     Y: 375
   };
 
-  var adForm = document.querySelector('.ad-form');
-  var adFormFieldsets = adForm.querySelectorAll('fieldset');
-  var adFormRoomsNumber = adForm.querySelector('#room_number');
-  var adFormGuestsNumber = adForm.querySelector('#capacity');
+  var ad = document.querySelector('.ad-form');
+  var adFieldsets = ad.querySelectorAll('fieldset');
+  var adFormRoomsNumber = ad.querySelector('#room_number');
+  var adFormGuestsNumber = ad.querySelector('#capacity');
   var guestsOptions = adFormGuestsNumber.querySelectorAll('option');
-  var adFormTitle = adForm.querySelector('#title');
-  var adFormTimeIn = adForm.querySelector('#timein');
-  var adFormTimeOut = adForm.querySelector('#timeout');
-  var adFormPrice = adForm.querySelector('#price');
-  var adFormType = adForm.querySelector('#type');
-  var adFormTimeContainer = adForm.querySelector('.ad-form__element--time');
-  var addressInput = adForm.querySelector('#address');
-  var resetButton = adForm.querySelector('.ad-form__reset');
+  var adFormTitle = ad.querySelector('#title');
+  var adFormTimeIn = ad.querySelector('#timein');
+  var adFormTimeOut = ad.querySelector('#timeout');
+  var adFormPrice = ad.querySelector('#price');
+  var adFormType = ad.querySelector('#type');
+  var adFormTimeContainer = ad.querySelector('.ad-form__element--time');
+  var addressInput = ad.querySelector('#address');
+  var resetButton = ad.querySelector('.ad-form__reset');
   var mapFilters = document.querySelector('.map__filters');
   var mapFiltersFeatures = mapFilters.querySelectorAll('input');
 
-  var guestsParams = {
+  var GuestsParams = {
     ANY: guestsOptions[0],
     ONE_GUEST: guestsOptions[1],
     TWO_GUESTS: guestsOptions[2],
     NOT_FOR_GUESTS: guestsOptions[3],
   };
 
-  var guestsIndex = {
+  var GuestsIndex = {
     ONE: 2,
     NO_ONE: 3
   };
 
-  adForm.querySelector('#address').setAttribute('readonly', 'readonly');
-  adFormPrice.placeholder = OFFER_PRICE.flat;
+  ad.querySelector('#address').setAttribute('readonly', 'readonly');
+  adFormPrice.placeholder = OfferPrice.FLAT;
 
   /**
    * параметры неактивной страницы
    */
   function deactivatePage() {
-    adForm.reset();
+    ad.reset();
     mapFilters.reset();
     window.filter.removePins();
     window.photoLoad.removePhotos();
     setDefaultRoomsStatus();
     window.map.mapMain.classList.add('map--faded');
-    adForm.classList.add('ad-form--disabled');
-    adFormFieldsets.forEach(setDisableAttribute);
+    ad.classList.add('ad-form--disabled');
+    adFieldsets.forEach(setDisableAttribute);
     window.map.mapFiltersSelect.forEach(setDisableAttribute);
     mapFiltersFeatures.forEach(setDisableAttribute);
-    window.card.removeCard();
-    window.pin.mapPinMain.style.left = PIN_DEFAULT.X + 'px';
-    window.pin.mapPinMain.style.top = PIN_DEFAULT.Y + 'px';
+    window.card.removeOffer();
+    window.pin.mapMain.style.left = PinDefault.X + 'px';
+    window.pin.mapMain.style.top = PinDefault.Y + 'px';
     window.map.isActivate = false;
   }
 
@@ -71,6 +71,8 @@
     evt.preventDefault();
     deactivatePage();
     writeInactiveAdress();
+    adFormTitle.style.borderColor = '';
+    adFormPrice.style.borderColor = '';
   });
 
   /**
@@ -89,18 +91,30 @@
     elem.removeAttribute('disabled');
   }
 
-  adFormFieldsets.forEach(setDisableAttribute);
+  adFieldsets.forEach(setDisableAttribute);
 
   // подсказки полей при неправильно введенных данных
   adFormTitle.addEventListener('invalid', function () {
     if (adFormTitle.validity.tooShort) {
       adFormTitle.setCustomValidity('Минимальная длина — 30 символов.');
+      adFormTitle.style.borderColor = '#ff0000';
     } else if (adFormTitle.validity.tooLong) {
       adFormTitle.setCustomValidity('Максимальная длина — 100 символов.');
+      adFormTitle.style.borderColor = '#ff0000';
     } else if (adFormTitle.validity.valueMissing) {
       adFormTitle.setCustomValidity('Обязательное текстовое поле.');
+      adFormTitle.style.borderColor = '#ff0000';
     } else {
       adFormTitle.setCustomValidity('');
+      adFormTitle.style.borderColor = '';
+    }
+  });
+
+  adFormPrice.addEventListener('invalid', function () {
+    if (adFormPrice.validity.valueMissing) {
+      adFormPrice.style.borderColor = '#ff0000';
+    } else {
+      adFormPrice.style.borderColor = '';
     }
   });
 
@@ -113,35 +127,43 @@
 
     switch (typeValue) {
       case 'bungalo':
-        adFormPrice.placeholder = OFFER_PRICE.bungalo;
-        if (OFFER_PRICE.bungalo > priceValue) {
+        adFormPrice.placeholder = OfferPrice.BUNGALO;
+        if (OfferPrice.BUNGALO > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена за ночь 0');
+          adFormPrice.style.borderColor = '#ff0000';
         } else {
           adFormPrice.setCustomValidity('');
+          adFormPrice.style.borderColor = '';
         }
         break;
       case 'flat':
-        adFormPrice.placeholder = OFFER_PRICE.flat;
-        if (OFFER_PRICE.flat > priceValue) {
+        adFormPrice.placeholder = OfferPrice.FLAT;
+        if (OfferPrice.FLAT > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена за ночь 1 000');
+          adFormPrice.style.borderColor = '#ff0000';
         } else {
           adFormPrice.setCustomValidity('');
+          adFormPrice.style.borderColor = '';
         }
         break;
       case 'house':
-        adFormPrice.placeholder = OFFER_PRICE.house;
-        if (OFFER_PRICE.house > priceValue) {
+        adFormPrice.placeholder = OfferPrice.HOUSE;
+        if (OfferPrice.HOUSE > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена 5 000');
+          adFormPrice.style.borderColor = '#ff0000';
         } else {
           adFormPrice.setCustomValidity('');
+          adFormPrice.style.borderColor = '';
         }
         break;
       case 'palace':
-        adFormPrice.placeholder = OFFER_PRICE.palace;
-        if (OFFER_PRICE.palace > priceValue) {
+        adFormPrice.placeholder = OfferPrice.PALACE;
+        if (OfferPrice.PALACE > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена 10 000');
+          adFormPrice.style.borderColor = '#ff0000';
         } else {
           adFormPrice.setCustomValidity('');
+          adFormPrice.style.borderColor = '';
         }
         break;
     }
@@ -165,11 +187,11 @@
    * начальное состояние выбора комнат и гостей
    */
   function setDefaultRoomsStatus() {
-    adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
-    guestsParams.ANY.disabled = true;
-    guestsParams.ONE_GUEST.disabled = true;
-    guestsParams.TWO_GUESTS.disabled = false;
-    guestsParams.NOT_FOR_GUESTS.disabled = true;
+    adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
+    GuestsParams.ANY.disabled = true;
+    GuestsParams.ONE_GUEST.disabled = true;
+    GuestsParams.TWO_GUESTS.disabled = false;
+    GuestsParams.NOT_FOR_GUESTS.disabled = true;
   }
 
   setDefaultRoomsStatus();
@@ -180,32 +202,32 @@
 
     switch (roomsNumber) {
       case '1':
-        adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
-        guestsParams.ANY.disabled = true;
-        guestsParams.ONE_GUEST.disabled = true;
-        guestsParams.TWO_GUESTS.disabled = false;
-        guestsParams.NOT_FOR_GUESTS.disabled = true;
+        adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
+        GuestsParams.ANY.disabled = true;
+        GuestsParams.ONE_GUEST.disabled = true;
+        GuestsParams.TWO_GUESTS.disabled = false;
+        GuestsParams.NOT_FOR_GUESTS.disabled = true;
         break;
       case '2':
-        adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
-        guestsParams.ANY.disabled = true;
-        guestsParams.ONE_GUEST.disabled = false;
-        guestsParams.TWO_GUESTS.disabled = false;
-        guestsParams.NOT_FOR_GUESTS.disabled = true;
+        adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
+        GuestsParams.ANY.disabled = true;
+        GuestsParams.ONE_GUEST.disabled = false;
+        GuestsParams.TWO_GUESTS.disabled = false;
+        GuestsParams.NOT_FOR_GUESTS.disabled = true;
         break;
       case '3':
-        adFormGuestsNumber.selectedIndex = guestsIndex.ONE;
-        guestsParams.ANY.disabled = false;
-        guestsParams.ONE_GUEST.disabled = false;
-        guestsParams.TWO_GUESTS.disabled = false;
-        guestsParams.NOT_FOR_GUESTS.disabled = true;
+        adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
+        GuestsParams.ANY.disabled = false;
+        GuestsParams.ONE_GUEST.disabled = false;
+        GuestsParams.TWO_GUESTS.disabled = false;
+        GuestsParams.NOT_FOR_GUESTS.disabled = true;
         break;
       default:
-        adFormGuestsNumber.selectedIndex = guestsIndex.NO_ONE;
-        guestsParams.ANY.disabled = true;
-        guestsParams.ONE_GUEST.disabled = true;
-        guestsParams.TWO_GUESTS.disabled = true;
-        guestsParams.NOT_FOR_GUESTS.disabled = false;
+        adFormGuestsNumber.selectedIndex = GuestsIndex.NO_ONE;
+        GuestsParams.ANY.disabled = true;
+        GuestsParams.ONE_GUEST.disabled = true;
+        GuestsParams.TWO_GUESTS.disabled = true;
+        GuestsParams.NOT_FOR_GUESTS.disabled = false;
     }
   });
 
@@ -213,7 +235,7 @@
    * определение координат в дефолтном состоянии
    */
   function writeInactiveAdress() {
-    addressInput.value = Math.round(window.pin.mapPinMain.offsetLeft + window.pin.mapPinMain.offsetWidth / 2) + ', ' + Math.round(window.pin.mapPinMain.offsetTop + window.pin.mapPinMain.offsetHeight / 2);
+    addressInput.value = Math.round(window.pin.mapMain.offsetLeft + window.pin.mapMain.offsetWidth / 2) + ', ' + Math.round(window.pin.mapMain.offsetTop + window.pin.mapMain.offsetHeight / 2);
   }
 
   writeInactiveAdress();
@@ -222,7 +244,7 @@
    * определение координат при перемещении метки
    */
   function writeAddress() {
-    addressInput.value = Math.round(window.pin.mapPinMain.offsetLeft + window.pin.pinParams.MAIN_SIZE_WIDTH / 2) + ', ' + Math.round(window.pin.mapPinMain.offsetTop + window.pin.pinParams.MAIN_SIZE_HEIGHT);
+    addressInput.value = Math.round(window.pin.mapMain.offsetLeft + window.pin.Params.MAIN_SIZE_WIDTH / 2) + ', ' + Math.round(window.pin.mapMain.offsetTop + window.pin.Params.MAIN_SIZE_HEIGHT);
   }
 
   adFormType.addEventListener('change', setTypeOrPrice);
@@ -231,8 +253,8 @@
   /**
    * успешная отправка формы
    */
-  function formSubmitSuccessHandler() {
-    window.success.getSuccessMessage();
+  function onFormSubmitSuccess() {
+    window.success.getMessage();
     deactivatePage();
     writeInactiveAdress();
   }
@@ -241,27 +263,27 @@
    * ошибка при отправке формы
    * @param {string} errorMessage
    */
-  function formSubmitErrorHandler(errorMessage) {
-    window.error.getErrorMessage(errorMessage);
+  function onFormSubmitError(errorMessage) {
+    window.error.getMessage(errorMessage);
   }
 
   /**
    * отправка формы
    * @param {Object} evt
    */
-  function formSubmitHandler(evt) {
+  function onFormSubmit(evt) {
     evt.preventDefault();
-    var data = new FormData(adForm);
-    window.backend.upload(formSubmitSuccessHandler, formSubmitErrorHandler, data);
+    var data = new FormData(ad);
+    window.backend.upload(onFormSubmitSuccess, onFormSubmitError, data);
   }
 
-  adForm.addEventListener('submit', formSubmitHandler);
+  ad.addEventListener('submit', onFormSubmit);
 
   window.form = {
     mapFilters: mapFilters,
     mapFiltersFeatures: mapFiltersFeatures,
-    adForm: adForm,
-    adFormFieldsets: adFormFieldsets,
+    ad: ad,
+    adFieldsets: adFieldsets,
     writeAddress: writeAddress,
     setDisableAttribute: setDisableAttribute,
     removeDisableAttribute: removeDisableAttribute

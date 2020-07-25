@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var pinParams = {
+  var Params = {
     // размер метки доступного предложения
     PIN_SIZE_WIDTH: 50,
     PIN_SIZE_HEIGHT: 70,
@@ -16,7 +16,7 @@
     MAX_Y: 630
   };
 
-  var mapPinMain = document.querySelector('.map__pin--main');
+  var mapMain = document.querySelector('.map__pin--main');
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   /**
@@ -24,7 +24,7 @@
    * @param {array} data
    * @return {node}
    */
-  function createPins(data) {
+  function createMarks(data) {
     var pinsFragment = document.createDocumentFragment();
     var offer;
 
@@ -45,8 +45,8 @@
     var offerPin = mapPinTemplate.cloneNode(true);
     var image = offerPin.querySelector('img');
 
-    offerPin.style.left = (data.location.x - window.pin.pinParams.PIN_SIZE_WIDTH / 2) + 'px';
-    offerPin.style.top = (data.location.y - window.pin.pinParams.PIN_SIZE_HEIGHT) + 'px';
+    offerPin.style.left = (data.location.x - window.pin.Params.PIN_SIZE_WIDTH / 2) + 'px';
+    offerPin.style.top = (data.location.y - window.pin.Params.PIN_SIZE_HEIGHT) + 'px';
     image.src = data.author.avatar;
     image.alt = data.offer.title;
 
@@ -60,7 +60,7 @@
         mapCard.remove();
       }
 
-      window.card.renderCard(data);
+      window.card.renderOffer(data);
     }
 
     offerPin.addEventListener('click', onPinClick);
@@ -72,7 +72,7 @@
    * удаление активного класса у меток
    * @param {HTMLElement} pin
    */
-  function removePinActiveClass(pin) {
+  function removeActiveClass(pin) {
     var pins = document.querySelectorAll('.map__pin[type="button"]');
 
     pins.forEach(function (elem) {
@@ -83,10 +83,10 @@
   }
 
   window.pin = {
-    pinParams: pinParams,
-    mapPinMain: mapPinMain,
-    removePinActiveClass: removePinActiveClass,
+    Params: Params,
+    mapMain: mapMain,
+    removeActiveClass: removeActiveClass,
     createOffer: createOffer,
-    createPins: createPins
+    createMarks: createMarks
   };
 })();

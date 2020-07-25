@@ -4,9 +4,9 @@
   // макисмальное число отображаемых предложений
   var MAX_PINS = 5;
 
-  var OFFER_VALUE = {
-    min: 10000,
-    max: 50000
+  var OfferValue = {
+    MIN: 10000,
+    MAX: 50000
   };
 
   var filtres = document.querySelector('.map__filters');
@@ -53,12 +53,13 @@
     function filterByPrice(offerValue, filterValue) {
       switch (filterValue) {
         case 'low':
-          return offerValue < OFFER_VALUE.min;
+          return offerValue < OfferValue.MIN;
         case 'middle':
-          return offerValue >= OFFER_VALUE.min && offerValue < OFFER_VALUE.max;
+          return offerValue >= OfferValue.MIN && offerValue < OfferValue.MAX;
         case 'high':
-          return offerValue >= OFFER_VALUE.max;
+          return offerValue >= OfferValue.MAX;
       }
+
       return true;
     }
 
@@ -93,12 +94,12 @@
 
     // максимальное количество отображаемых меток
     var filteredPinsSliced = filteredPins.slice(0, MAX_PINS);
-    window.map.mapPins.appendChild(window.pin.createPins(filteredPinsSliced));
+    window.map.mapPins.appendChild(window.pin.createMarks(filteredPinsSliced));
   });
 
   // при смене вариантов в фильтре, происходит удаление старых карточек и отображаются новые
   filtres.addEventListener('change', function () {
-    window.card.removeCard();
+    window.card.removeOffer();
     updatePins();
   });
 

@@ -4,7 +4,7 @@
   /**
    * получение сообщения об успешной отправки данных на сервер
    */
-  function getSuccessMessage() {
+  function getMessage() {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
     var successElement = successTemplate.cloneNode(true);
     var main = document.querySelector('main');
@@ -33,6 +33,6 @@
   }
 
   window.success = {
-    getSuccessMessage: getSuccessMessage
+    getMessage: getMessage
   };
 })();

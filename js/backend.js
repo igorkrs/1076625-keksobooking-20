@@ -1,12 +1,14 @@
 'use strict';
 
 (function () {
+  var TIMEOUT = 10000;
+
   var serverUrls = {
     LOAD: 'https://javascript.pages.academy/keksobooking/data',
     UPLOAD: 'https://javascript.pages.academy/keksobooking'
   };
 
-  var TIMEOUT = 10000;
+
 
   function createXhr(method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
