@@ -8,8 +8,6 @@
     UPLOAD: 'https://javascript.pages.academy/keksobooking'
   };
 
-
-
   function createXhr(method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
