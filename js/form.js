@@ -26,7 +26,7 @@
     ONE: '1',
     TWO: '2',
     THREE: '3'
-  }
+  };
 
   var ad = document.querySelector('.ad-form');
   var adFieldsets = ad.querySelectorAll('fieldset');

@@ -13,7 +13,7 @@
     BAD_REQUEST: 400,
     NOT_FOUND: 404,
     SERVICE_UNAVAILABLE: 503
-  }
+  };
 
   function createXhr(method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
