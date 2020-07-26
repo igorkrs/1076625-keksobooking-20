@@ -93,7 +93,7 @@
    * @return {node}
    */
   function renderOffer(card) {
-    var cardFragment = document.createDocumentFragment();
+    var cardFragmentElement = document.createDocumentFragment();
     var cardElement = cardTemplate.content.querySelector('.map__card').cloneNode(true);
 
     cardElement.querySelector('.popup__avatar').src = card.author.avatar;
@@ -109,7 +109,7 @@
     cardElement.querySelector('.popup__photos').innerHTML = '';
     cardElement.querySelector('.popup__photos').appendChild(createPhotos(card.offer.photos));
 
-    var closeCardButton = cardElement.querySelector('.popup__close');
+    var closeCardButtonElement = cardElement.querySelector('.popup__close');
 
     /**
      * закрытие карточки подробной информации
@@ -119,7 +119,7 @@
       window.pin.removeActiveClass(cardElement);
 
       // по клику
-      closeCardButton.addEventListener('click', closeOffer);
+      closeCardButtonElement.addEventListener('click', closeOffer);
       // при нажатии на ESC
       document.removeEventListener('keydown', onCardEsc);
     }
@@ -133,12 +133,12 @@
     }
 
     // закрытие карточки по клику
-    closeCardButton.addEventListener('click', closeOffer);
+    closeCardButtonElement.addEventListener('click', closeOffer);
     // закрытие карточки по нажатию ESC
     document.addEventListener('keydown', onCardEsc);
 
-    cardFragment.appendChild(cardElement);
-    window.map.mapMain.insertBefore(cardFragment, cardFilter);
+    cardFragmentElement.appendChild(cardElement);
+    window.map.mapMain.insertBefore(cardFragmentElement, cardFilter);
 
     return cardElement;
   }

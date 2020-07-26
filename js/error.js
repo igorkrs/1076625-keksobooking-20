@@ -16,6 +16,7 @@
      */
     function closeError() {
       main.removeChild(element);
+      window.form.deactivatePage();
 
       button.removeEventListener('click', closeError);
       document.removeEventListener('mousedown', closeError);

@@ -1,6 +1,25 @@
 'use strict';
 
 (function () {
+  // числа, в зависимости от которых будет меняться
+  // склонение слов
+  var VaraibleValue = {
+    MIN: 1,
+    TWO: 2,
+    FOUR: 4,
+    FIVE: 5,
+    TEN: 10,
+    TWENTY: 20,
+    MAX: 100
+  };
+
+  // индекс элемента в массиве
+  var ArrayIndex = {
+    FIRST: '0',
+    SECOND: '1',
+    THIRD: '2'
+  }
+
   /**
    * склонение слов
    * @param {number} num число, в зависимости от которого будем склонять
@@ -9,18 +28,18 @@
    */
   function declension(num, expressions) {
     var result;
-    var count = num % 100;
+    var count = num % VaraibleValue.MAX;
 
-    if (count >= 5 && count <= 20) {
-      result = expressions['2'];
+    if (count >= VaraibleValue.FIVE && count <= VaraibleValue.TWENTY) {
+      result = expressions[ArrayIndex.THIRD];
     } else {
-      count = count % 10;
-      if (count === 1) {
-        result = expressions['0'];
-      } else if (count >= 2 && count <= 4) {
-        result = expressions['1'];
+      count = count % VaraibleValue.TEN;
+      if (count === VaraibleValue.MIN) {
+        result = expressions[ArrayIndex.FIRST];
+      } else if (count >= VaraibleValue.TWO && count <= VaraibleValue.FOUR) {
+        result = expressions[ArrayIndex.SECOND];
       } else {
-        result = expressions['2'];
+        result = expressions[ArrayIndex.THIRD];
       }
     }
 

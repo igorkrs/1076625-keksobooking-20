@@ -3,10 +3,17 @@
 (function () {
   var TIMEOUT = 10000;
 
-  var serverUrls = {
+  var ServerUrls = {
     LOAD: 'https://javascript.pages.academy/keksobooking/data',
     UPLOAD: 'https://javascript.pages.academy/keksobooking'
   };
+
+  var StatusCode = {
+    OK: 200,
+    BAD_REQUEST: 400,
+    NOT_FOUND: 404,
+    SERVICE_UNAVAILABLE: 503
+  }
 
   function createXhr(method, url, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
@@ -14,16 +21,16 @@
 
     xhr.addEventListener('load', function () {
       switch (xhr.status) {
-        case 200:
+        case StatusCode.OK:
           onSuccess(xhr.response);
           break;
-        case 400:
+        case StatusCode.BAD_REQUEST:
           onError('Неверный запрос.');
           break;
-        case 404:
+        case StatusCode.NOT_FOUND:
           onError('Страница не найдена.');
           break;
-        case 503:
+        case StatusCode.SERVICE_UNAVAILABLE:
           onError('Сервис временно недоступен.');
           break;
         default:
@@ -45,11 +52,11 @@
   }
 
   function load(onSuccess, onError) {
-    createXhr('GET', serverUrls.LOAD, onSuccess, onError);
+    createXhr('GET', ServerUrls.LOAD, onSuccess, onError);
   }
 
   function upload(onSuccess, onError, data) {
-    createXhr('POST', serverUrls.UPLOAD, onSuccess, onError, data);
+    createXhr('POST', ServerUrls.UPLOAD, onSuccess, onError, data);
   }
 
   window.backend = {

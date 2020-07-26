@@ -15,6 +15,19 @@
     Y: 375
   };
 
+  var ApartmentsTypeValue = {
+    BUNGALO: 'bungalo',
+    FLAT: 'flat',
+    HOUSE: 'house',
+    PALACE: 'palace'
+  };
+
+  var RoomsCapacity = {
+    ONE: '1',
+    TWO: '2',
+    THREE: '3'
+  }
+
   var ad = document.querySelector('.ad-form');
   var adFieldsets = ad.querySelectorAll('fieldset');
   var adFormRoomsNumber = ad.querySelector('#room_number');
@@ -126,7 +139,7 @@
     var priceValue = adFormPrice.value;
 
     switch (typeValue) {
-      case 'bungalo':
+      case ApartmentsTypeValue.BUNGALO:
         adFormPrice.placeholder = OfferPrice.BUNGALO;
         if (OfferPrice.BUNGALO > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена за ночь 0');
@@ -136,7 +149,7 @@
           adFormPrice.style.borderColor = '';
         }
         break;
-      case 'flat':
+      case ApartmentsTypeValue.FLAT:
         adFormPrice.placeholder = OfferPrice.FLAT;
         if (OfferPrice.FLAT > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена за ночь 1 000');
@@ -146,7 +159,7 @@
           adFormPrice.style.borderColor = '';
         }
         break;
-      case 'house':
+      case ApartmentsTypeValue.HOUSE:
         adFormPrice.placeholder = OfferPrice.HOUSE;
         if (OfferPrice.HOUSE > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена 5 000');
@@ -156,7 +169,7 @@
           adFormPrice.style.borderColor = '';
         }
         break;
-      case 'palace':
+      case ApartmentsTypeValue.PALACE:
         adFormPrice.placeholder = OfferPrice.PALACE;
         if (OfferPrice.PALACE > priceValue) {
           adFormPrice.setCustomValidity('Минимальная цена 10 000');
@@ -201,21 +214,21 @@
     var roomsNumber = adFormRoomsNumber.value;
 
     switch (roomsNumber) {
-      case '1':
+      case RoomsCapacity.ONE:
         adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
         GuestsParams.ANY.disabled = true;
         GuestsParams.ONE_GUEST.disabled = true;
         GuestsParams.TWO_GUESTS.disabled = false;
         GuestsParams.NOT_FOR_GUESTS.disabled = true;
         break;
-      case '2':
+      case RoomsCapacity.TWO:
         adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
         GuestsParams.ANY.disabled = true;
         GuestsParams.ONE_GUEST.disabled = false;
         GuestsParams.TWO_GUESTS.disabled = false;
         GuestsParams.NOT_FOR_GUESTS.disabled = true;
         break;
-      case '3':
+      case RoomsCapacity.THREE:
         adFormGuestsNumber.selectedIndex = GuestsIndex.ONE;
         GuestsParams.ANY.disabled = false;
         GuestsParams.ONE_GUEST.disabled = false;
@@ -286,6 +299,7 @@
     adFieldsets: adFieldsets,
     writeAddress: writeAddress,
     setDisableAttribute: setDisableAttribute,
-    removeDisableAttribute: removeDisableAttribute
+    removeDisableAttribute: removeDisableAttribute,
+    deactivatePage: deactivatePage
   };
 })();

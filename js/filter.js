@@ -9,6 +9,13 @@
     MAX: 50000
   };
 
+  var FilterPriceValue = {
+    ANY: 'any',
+    LOW: 'low',
+    MIDDLE: 'middle',
+    HIGH: 'high'
+  };
+
   var filtres = document.querySelector('.map__filters');
   var housingType = filtres.querySelector('#housing-type');
   var housingPrice = filtres.querySelector('#housing-price');
@@ -41,7 +48,7 @@
      * @return {string}
      */
     function filterByParams(offerValue, filterValue) {
-      return filterValue === 'any' || offerValue.toString() === filterValue.toString();
+      return filterValue === FilterPriceValue.ANY || offerValue.toString() === filterValue.toString();
     }
 
     /**
@@ -52,11 +59,11 @@
      */
     function filterByPrice(offerValue, filterValue) {
       switch (filterValue) {
-        case 'low':
+        case FilterPriceValue.LOW:
           return offerValue < OfferValue.MIN;
-        case 'middle':
+        case FilterPriceValue.MIDDLE:
           return offerValue >= OfferValue.MIN && offerValue < OfferValue.MAX;
-        case 'high':
+        case FilterPriceValue.HIGH:
           return offerValue >= OfferValue.MAX;
       }
 

@@ -6,14 +6,14 @@
    */
   function getMessage() {
     var successTemplate = document.querySelector('#success').content.querySelector('.success');
-    var successElement = successTemplate.cloneNode(true);
+    var success = successTemplate.cloneNode(true);
     var main = document.querySelector('main');
 
     /**
      * закрытие окна успешной отправки данных
      */
     function closeSuccess() {
-      main.removeChild(successElement);
+      main.removeChild(success);
       document.removeEventListener('click', closeSuccess);
       document.removeEventListener('keydown', onSuccessEscDown);
     }
@@ -29,7 +29,7 @@
     document.addEventListener('click', closeSuccess);
     document.addEventListener('keydown', onSuccessEscDown);
 
-    main.appendChild(successElement);
+    main.appendChild(success);
   }
 
   window.success = {

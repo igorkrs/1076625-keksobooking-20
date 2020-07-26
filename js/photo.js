@@ -56,9 +56,9 @@
   function createEmptyBlock() {
     var photoBlock = document.createElement('div');
     photoBlock.classList.add('ad-form__photo');
-    var photoElement = photoBlock.cloneNode(true);
+    var photoDuplicate = photoBlock.cloneNode(true);
 
-    photoContainer.appendChild(photoElement);
+    photoContainer.appendChild(photoDuplicate);
   }
 
   /**
